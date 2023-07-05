@@ -23,7 +23,7 @@ Ahead:
     LOOP Back
 
 MOV Result, AL
-
+INT 3
 MOV AH, 4CH
 INT 21H
 

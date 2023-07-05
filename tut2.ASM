@@ -1,23 +1,27 @@
 .MODEL SMALL
 .STACK 100H
 
-.DATA
-    BUFFER DB 2 DUP(?)
-
 .CODE
-MAIN PROC
+    MAIN PROC
+        MOV AX, @DATA
+        MOV DS, AX
 
-    MOV BL, 08H        ; Initialize BL register with 08H
-    MOV SI, 0E000H     ; Initialize CX register with E000H
+        MOV BL, 8               ; Number of bytes to transfer
 
-Loopp:
-    MOV DL, [SI]       ; Move the byte at the address pointed by CX to DL
-    MOV DI, 0B001H     ; Load AX with the address of BUFFER
-    MOV [DI], DL       ; Move the byte in DL to the address pointed by AX (BUFFER)
-    DEC BL             ; Decrement BL by 1
-    JNZ Loopp           ; Jump back to Loop if BL is not zero
+        MOV SI, 0E000H   ; Start address of the source block
+        MOV DI, 0B001H   ; Start address of the destination block
 
-    HLT                ; Halt the program
+    LOOP_START:
+        MOV AL, [SI]            ; Move the byte from the source to AL
+        MOV [DI], AL            ; Move the byte from AL to the destination
+        INC SI                  ; Increment the source address
+        INC DI                  ; Increment the destination address
+        DEC BL                  ; Decrement the count
+        JNZ LOOP_START          ; Jump to LOOP_START if count is not zero
+        INT 3
+        MOV AH, 4CH             ; Exit program
+        INT 21H
 
-MAIN ENDP
+    MAIN ENDP
+
 END MAIN

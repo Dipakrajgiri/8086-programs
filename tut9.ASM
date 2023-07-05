@@ -56,7 +56,7 @@ a2:
     LOOP Back
 
 MOV Vowel, BL
-
+INT 3
 MOV AH, 4CH
 INT 21H
 

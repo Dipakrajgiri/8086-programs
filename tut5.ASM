@@ -3,7 +3,7 @@
 .data
     Multiplier  dw 1234H
     Multiplicand dw 3456H
-    Product     dw ?
+    Product     dw ? ;3B8AD78
 
 .code
 MULT proc
@@ -13,6 +13,7 @@ MULT proc
     MUL Multiplicand
     MOV Product, AX
     MOV Product+2, DX
+    INT 3
     MOV AH, 4CH
     INT 21H
 MULT endp

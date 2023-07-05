@@ -4,7 +4,7 @@
 .data
     String db "exercise$"
     Ans db ?
-    Length equ $-String
+    Len equ $-String
 
 .code
 Main proc
@@ -12,20 +12,20 @@ Main proc
     MOV DS, AX
     MOV AL, 00H
     MOV SI, OFFSET String
-    MOV CX, Length
+    MOV CX, Len
 
 Back:
     MOV BH, [SI]
     CMP BH, "e"
-    JNZ Label
+    JNZ Lab
     INC AL
 
-Label:
+Lab:
     INC SI
     LOOP Back
 
 MOV Ans, AL
-
+INT 3
 MOV AH, 4CH
 INT 21H
 
